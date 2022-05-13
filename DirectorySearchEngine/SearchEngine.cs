@@ -11,7 +11,7 @@ namespace DirectorySearchEngine
 
             foreach (var drive in DriveInfo.GetDrives())
             {
-                if (drive.DriveType == DriveType.Network) continue;
+                if (drive.DriveType != DriveType.Fixed) continue;
                 driveInformation += $"DriveName={drive.Name}"+ Environment.NewLine;
                 driveInformation += $"AvailableFreeSpace={drive.AvailableFreeSpace}" + Environment.NewLine;
                 driveInformation += $"TotalSize={drive.TotalSize}" + Environment.NewLine;
