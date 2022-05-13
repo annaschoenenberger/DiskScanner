@@ -6,7 +6,23 @@
         xmlns:local="clr-namespace:DiskScanner.View"
         mc:Ignorable="d"
         Title="Anna's Disk Scanner" Height="450" Width="800">
-    <Grid>
+        <DockPanel LastChildFill="False">
+        <ToolBar DockPanel.Dock="Top">
+            <Button Margin="2" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Background="#00000000"/>
+            <Separator/>
+            <Button Margin="2" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32"/>
+            <Separator/>
+            <Button Margin="2" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Click="Button_Click"  /> 
 
-    </Grid>
+
+        </ToolBar>
+        <StatusBar DockPanel.Dock="Bottom" Height="20" HorizontalContentAlignment="Right">
+            <TextBlock Text="Status" MinWidth="100" MaxWidth="500"/>
+            <ProgressBar Height="10" MinWidth="200" HorizontalAlignment="Right"/>
+
+
+
+        </StatusBar>   
+        </DockPanel>
+
 </Window>

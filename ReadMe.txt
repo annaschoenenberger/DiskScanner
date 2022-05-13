@@ -1,0 +1,1 @@
+Individual Project submitted by Anna Schönenberger for the course "4,799,1.00: Skills: Programming - Introduction Level"in the spring semester 2022 at the University of St. Gallen (HSG).
