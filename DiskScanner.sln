@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{43B9E2CB-0B6A-4361-B1B8-189B968F0679}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectorySearchEngine", "ClassLibrary1\DirectorySearchEngine.csproj", "{61E519B0-DB30-4988-AB18-BEE02B6CF924}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectorySearchEngine", "DirectorySearchEngine\DirectorySearchEngine.csproj", "{61E519B0-DB30-4988-AB18-BEE02B6CF924}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

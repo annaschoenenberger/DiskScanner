@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\DirectorySearchEngine.csproj">
+    <ProjectReference Include="..\DirectorySearchEngine\DirectorySearchEngine.csproj">
       <Project>{61e519b0-db30-4988-ab18-bee02b6cf924}</Project>
       <Name>DirectorySearchEngine</Name>
     </ProjectReference>
