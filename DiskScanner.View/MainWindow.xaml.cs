@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiskScanner.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,8 +24,9 @@ namespace DiskScanner.View
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = MainViewModel;
         }
-
+        public ScannerViewModel MainViewModel { get; set; }=new ScannerViewModel();
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();

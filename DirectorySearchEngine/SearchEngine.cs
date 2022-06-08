@@ -28,6 +28,8 @@ namespace DirectorySearchEngine
             {
                 if (drive.DriveType != DriveType.Fixed) continue ;
                 GetStatistics(drive.RootDirectory, ref drivestat, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/1000);
+                drivestat.ProgressInPercent = 100;
+                ProgressNotification?.Invoke(this,new SearchProgress(drivestat));
             } 
             return drivestat;
 
@@ -44,11 +46,17 @@ namespace DirectorySearchEngine
                     stat.NoOfFiles++;
                     stat.NoOfTotalBytes+=file.Length;
                     var newProgress=stat.NoOfTotalBytes/1000000/reportEveryAdditionalMegaByte;
+                    //notification based on the size
                     if (newProgress > actualProgress)
                     {
                         stat.ProgressInPercent += 0.1;
                         actualProgress = newProgress;
                         ProgressNotification?.Invoke(this,new SearchProgress(stat));
+                    }
+                    //notification based on file count
+                    if (stat.NoOfFiles %100==0)
+                    {
+                        ProgressNotification?.Invoke(this, new SearchProgress(stat));
                     }
 
                 }

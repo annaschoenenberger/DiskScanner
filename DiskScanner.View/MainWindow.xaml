@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiskScanner.View"
+        xmlns:vm="clr-namespace:DiskScanner.ViewModel;assembly=DiskScanner.ViewModel"
+        d:DataContext="{d:DesignInstance Type=vm:ScannerViewModel}"
         mc:Ignorable="d"
         Title="Anna's Disk Scanner" Height="450" Width="800">
         <DockPanel LastChildFill="False">
         <ToolBar DockPanel.Dock="Top">
-            <Button Margin="2" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Background="#00000000"/>
+            <Button Margin="2" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Background="#00000000" Command="{Binding StartSearch}"/>
             <Separator/>
             <Button Margin="2" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32"/>
             <Separator/>
@@ -16,9 +18,12 @@
 
 
         </ToolBar>
-        <StatusBar DockPanel.Dock="Bottom" Height="20" HorizontalContentAlignment="Right">
-            <TextBlock Text="Status" MinWidth="100" MaxWidth="500"/>
-            <ProgressBar Height="10" MinWidth="200" HorizontalAlignment="Right"/>
+        <StatusBar DockPanel.Dock="Bottom" Height="30" HorizontalContentAlignment="Right">
+            <TextBlock Text="Processed files" MaxWidth="500"/>
+            <TextBox Text="{Binding NoOfFiles}" MinWidth="50" IsReadOnly="True"/>
+            <Separator/>
+            <TextBlock Text="Progress"/>
+            <ProgressBar Height="10" MinWidth="200" HorizontalAlignment="Right" Value="{Binding ProgressInPercent}" Maximum="100"/>
 
 
 
