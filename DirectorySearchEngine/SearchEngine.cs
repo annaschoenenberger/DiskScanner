@@ -27,11 +27,12 @@ namespace DirectorySearchEngine
             foreach (var drive in DriveInfo.GetDrives())
             {
                 if (drive.DriveType != DriveType.Fixed) continue ;
-                GetStatistics(drive.RootDirectory, ref drivestat, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/100);
+                GetStatistics(drive.RootDirectory, ref drivestat, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/1000);
             } 
             return drivestat;
 
         }
+        public event EventHandler<SearchProgress> ProgressNotification;
 
         private void GetStatistics(DirectoryInfo rootDirectory, ref DriveStatistic stat, long reportEveryAdditionalMegaByte)
         {
@@ -45,8 +46,9 @@ namespace DirectorySearchEngine
                     var newProgress=stat.NoOfTotalBytes/1000000/reportEveryAdditionalMegaByte;
                     if (newProgress > actualProgress)
                     {
+                        stat.ProgressInPercent += 0.1;
                         actualProgress = newProgress;
-                        Console.Write(".");
+                        ProgressNotification?.Invoke(this,new SearchProgress(stat));
                     }
 
                 }

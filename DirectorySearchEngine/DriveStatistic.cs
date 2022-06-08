@@ -13,6 +13,7 @@ namespace DirectorySearchEngine
         public int NoOfDirectories { get; set; }
         public int NoOfFilesWithNoAccess { get; set; }
         public long NoOfTotalBytes { get; set; }
+        public double ProgressInPercent { get; set; }
 
     }
 }
