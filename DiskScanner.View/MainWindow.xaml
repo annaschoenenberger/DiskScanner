@@ -18,16 +18,27 @@
 
 
         </ToolBar>
-        <StatusBar DockPanel.Dock="Bottom" Height="30" HorizontalContentAlignment="Right">
-            <TextBlock Text="Processed files" MaxWidth="500"/>
-            <TextBox Text="{Binding NoOfFiles}" MinWidth="50" IsReadOnly="True"/>
-            <Separator/>
-            <TextBlock Text="Progress"/>
-            <ProgressBar Height="10" MinWidth="200" HorizontalAlignment="Right" Value="{Binding ProgressInPercent}" Maximum="100"/>
+        <StatusBar DockPanel.Dock="Bottom" Height="60" HorizontalContentAlignment="Left">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="30"/>
+                    <RowDefinition MinHeight="30"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Processed files" MaxWidth="500"/>
+                    <TextBox Text="{Binding NoOfFiles}" MinWidth="50" IsReadOnly="True" Margin="5,0,5,0"/>
+                    <TextBlock Text="Progress"/>
+                    <ProgressBar Height="10" MinWidth="200" HorizontalAlignment="Right" Value="{Binding ProgressInPercent}" Maximum="100" Margin="5,0,5,0"/>
+                    
+                </StackPanel>
+                <Label Grid.Row="1" Content="{Binding ActualDirectoryName}" Width="710" Height="30"/>
+
+
+            </Grid>
 
 
 
-        </StatusBar>   
-        </DockPanel>
+        </StatusBar>
+    </DockPanel>
 
 </Window>

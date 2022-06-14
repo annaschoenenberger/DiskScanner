@@ -39,6 +39,7 @@ namespace DirectorySearchEngine
         private void GetStatistics(DirectoryInfo rootDirectory, ref DriveStatistic stat, long reportEveryAdditionalMegaByte)
         {
             var actualProgress = stat.NoOfTotalBytes /1000000/ reportEveryAdditionalMegaByte;
+            stat.ActualDirectoryName = rootDirectory.FullName;
             try
             {
                 foreach (var file in rootDirectory.GetFiles())

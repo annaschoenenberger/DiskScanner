@@ -26,6 +26,7 @@ namespace DiskScanner.ViewModel
         {
             NoOfFiles = e.DriveStatisticProgress.NoOfFiles;
             ProgressInPercent = e.DriveStatisticProgress.ProgressInPercent;
+            ActualDirectoryName = e.DriveStatisticProgress.ActualDirectoryName;
         }
 
         public SearchEngine Engine { get; set; }
@@ -37,7 +38,7 @@ namespace DiskScanner.ViewModel
 
         private void OnStart()
         {
-            Task.Run(() => 
+            Task.Run(() =>
                 {
                     Engine.GetDriveStatistic();
                 });
@@ -45,17 +46,23 @@ namespace DiskScanner.ViewModel
 
         public ICommand StartSearch { get; set; }
         public ICommand StopSearch { get; set; }
-        public double ProgressInPercent 
-        { 
-            get => progressInPercent; 
-            set => SetProperty(ref progressInPercent,value); 
+        public double ProgressInPercent
+        {
+            get => progressInPercent;
+            set => SetProperty(ref progressInPercent, value);
         }
         private int processedFiles;
+        private string actualDirectoryName;
 
         public int NoOfFiles
         {
             get { return processedFiles; }
-            set { SetProperty(ref processedFiles,value); }
+            set { SetProperty(ref processedFiles, value); }
+        }
+        public string ActualDirectoryName
+        { 
+            get => actualDirectoryName;
+            set => SetProperty(ref actualDirectoryName, value); 
         }
 
     }

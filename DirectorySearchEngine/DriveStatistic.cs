@@ -14,6 +14,7 @@ namespace DirectorySearchEngine
         public int NoOfFilesWithNoAccess { get; set; }
         public long NoOfTotalBytes { get; set; }
         public double ProgressInPercent { get; set; }
+        public string ActualDirectoryName { get; set; }
 
     }
 }
