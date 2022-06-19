@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 namespace DirectorySearchEngine
 {
@@ -21,14 +22,15 @@ namespace DirectorySearchEngine
             return driveInformation;
         }
 
-        public DriveStatistic GetDriveStatistic()
+        public DriveStatistic GetDriveStatistic(CancellationToken cancellationToken)
         {
             var drivestat=new DriveStatistic();
             foreach (var drive in DriveInfo.GetDrives())
             {
+                if (cancellationToken.IsCancellationRequested) break;
                 if (drive.DriveType != DriveType.Fixed) continue ;
-                GetStatistics(drive.RootDirectory, ref drivestat, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/1000);
-                drivestat.ProgressInPercent = 100;
+                GetStatistics(drive.RootDirectory, ref drivestat, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/1000, cancellationToken);
+                if (!cancellationToken.IsCancellationRequested) drivestat.ProgressInPercent = 100;
                 ProgressNotification?.Invoke(this,new SearchProgress(drivestat));
             } 
             return drivestat;
@@ -36,7 +38,7 @@ namespace DirectorySearchEngine
         }
         public event EventHandler<SearchProgress> ProgressNotification;
 
-        private void GetStatistics(DirectoryInfo rootDirectory, ref DriveStatistic stat, long reportEveryAdditionalMegaByte)
+        private void GetStatistics(DirectoryInfo rootDirectory, ref DriveStatistic stat, long reportEveryAdditionalMegaByte, CancellationToken cancellationToken)
         {
             var actualProgress = stat.NoOfTotalBytes /1000000/ reportEveryAdditionalMegaByte;
             stat.ActualDirectoryName = rootDirectory.FullName;
@@ -44,6 +46,7 @@ namespace DirectorySearchEngine
             {
                 foreach (var file in rootDirectory.GetFiles())
                 {
+                    if (cancellationToken.IsCancellationRequested) break;
                     stat.NoOfFiles++;
                     stat.NoOfTotalBytes+=file.Length;
                     var newProgress=stat.NoOfTotalBytes/1000000/reportEveryAdditionalMegaByte;
@@ -71,7 +74,8 @@ namespace DirectorySearchEngine
             {
                 try
                 {
-                    GetStatistics(subdir, ref stat, reportEveryAdditionalMegaByte);
+                    if (cancellationToken.IsCancellationRequested) break;
+                    GetStatistics(subdir, ref stat, reportEveryAdditionalMegaByte, cancellationToken);
                     stat.NoOfDirectories++;
                 }
                 catch

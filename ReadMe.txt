@@ -5,3 +5,4 @@ b) progress notifications over event using generic event handlers.
 c) console application for test purpose.
 d) WPF application for visualisation using the mvvm pattern (microsoft.toolkit.mvvm).
 e) usage of background task.
+f) cancellation of background task with cancellation token.

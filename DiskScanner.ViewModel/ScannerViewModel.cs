@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -33,14 +34,16 @@ namespace DiskScanner.ViewModel
 
         private void OnStop()
         {
-            throw new NotImplementedException();
+            TokenSource.Cancel();
         }
 
+        public CancellationTokenSource TokenSource { get; set; }
         private void OnStart()
         {
+            TokenSource = new CancellationTokenSource();
             Task.Run(() =>
                 {
-                    Engine.GetDriveStatistic();
+                    Engine.GetDriveStatistic(TokenSource.Token);
                 });
         }
 

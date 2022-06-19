@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DirectorySearchEngine;
 
@@ -15,7 +16,8 @@ namespace TestConsole
             engine.ProgressNotification += Engine_ProgressNotification;
             Console.WriteLine(engine.GetDriveOverview());
             Console.WriteLine("Analysing the drive, please wait!");
-            var stat = engine.GetDriveStatistic();
+            var cancellationTokenSource = new CancellationTokenSource();
+            var stat = engine.GetDriveStatistic(cancellationTokenSource.Token);
             Console.WriteLine();
             Console.WriteLine($"Final results:");
             Console.WriteLine($"Total no of bytes {stat.NoOfTotalBytes}");
