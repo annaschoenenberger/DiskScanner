@@ -28,6 +28,12 @@ namespace DiskScanner.ViewModel
             NoOfFiles = e.DriveStatisticProgress.NoOfFiles;
             ProgressInPercent = e.DriveStatisticProgress.ProgressInPercent;
             ActualDirectoryName = e.DriveStatisticProgress.ActualDirectoryName;
+            if (ProgressInPercent >= 100)
+            {
+                SearchIsRunning = false;
+                SearchIsStopped = true;
+            }
+
         }
 
         public SearchEngine Engine { get; set; }
@@ -35,11 +41,16 @@ namespace DiskScanner.ViewModel
         private void OnStop()
         {
             TokenSource.Cancel();
+            SearchIsRunning = false;
+            SearchIsStopped = true;
+
         }
 
         public CancellationTokenSource TokenSource { get; set; }
         private void OnStart()
         {
+            SearchIsRunning = true;
+            SearchIsStopped = false;
             TokenSource = new CancellationTokenSource();
             Task.Run(() =>
                 {
@@ -56,6 +67,8 @@ namespace DiskScanner.ViewModel
         }
         private int processedFiles;
         private string actualDirectoryName;
+        private bool searchIsRunning;
+        private bool searchIsStopped = true;
 
         public int NoOfFiles
         {
@@ -63,10 +76,19 @@ namespace DiskScanner.ViewModel
             set { SetProperty(ref processedFiles, value); }
         }
         public string ActualDirectoryName
-        { 
+        {
             get => actualDirectoryName;
-            set => SetProperty(ref actualDirectoryName, value); 
+            set => SetProperty(ref actualDirectoryName, value);
         }
-
+        public bool SearchIsRunning
+        {
+            get => searchIsRunning;
+            set => SetProperty(ref searchIsRunning, value);
+        }
+        public bool SearchIsStopped 
+        { 
+            get => searchIsStopped;
+            set => SetProperty(ref searchIsStopped, value); 
+        }
     }
 }

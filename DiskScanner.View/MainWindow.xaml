@@ -8,37 +8,12 @@
         d:DataContext="{d:DesignInstance Type=vm:ScannerViewModel}"
         mc:Ignorable="d"
         Title="Anna's Disk Scanner" Height="450" Width="1326">
-        <DockPanel LastChildFill="False" HorizontalAlignment="Stretch">
-        <ToolBar DockPanel.Dock="Top">
-            <Button Margin="2" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Background="#00000000" Command="{Binding StartSearch}"/>
-            <Separator/>
-            <Button Margin="2" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Command="{Binding StopSearch}"/>
-            <Separator/>
-            <Button Margin="2" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Click="Button_Click"  /> 
+        <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
+        <ToolBar DockPanel.Dock="Top" Height="30">
+
+            <Button Margin="2" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Click="Button_Click"  /> 
         </ToolBar>
-        <StatusBar DockPanel.Dock="Bottom" Height="75" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Name="SearchStatusBar">
-            <Grid HorizontalAlignment="Stretch" Width="{Binding ElementName=SearchStatusBar,Path=ActualWidth}">
-                <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="30"/>
-                    <RowDefinition MinHeight="30"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition MinWidth="100" Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition MinWidth="200" Width="*"/>
-
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Processed files" VerticalAlignment="Center"/>
-                <TextBox Name="ProcessedFilesTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding NoOfFiles}" MinWidth="50" IsReadOnly="True" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Progress" VerticalAlignment="Center"/>
-                <ProgressBar Grid.Row="0" Grid.Column="3" Height="{Binding ElementName=ProcessedFilesTextBox, Path=ActualHeight}" MinWidth="200" HorizontalAlignment="Stretch" Value="{Binding ProgressInPercent}" Maximum="100" Margin="5,0,15,0" VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Actual search folder" VerticalAlignment="Center" Height="20" Margin="0,0,10,0"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding ActualDirectoryName}" VerticalAlignment="Center" Margin="0,0,15,0"/>
-            </Grid>
-        </StatusBar>
+        <local:UserControlDirectorySearch HorizontalAlignment="Stretch" Height="100" VerticalAlignment="Top"/>
     </DockPanel>
 
 </Window>
