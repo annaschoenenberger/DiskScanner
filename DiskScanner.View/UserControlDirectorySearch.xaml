@@ -8,12 +8,12 @@
         d:DataContext="{d:DesignInstance Type=vm:ScannerViewModel}"
 
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="800">
+             d:DesignHeight="120" d:DesignWidth="800">
     <Grid HorizontalAlignment="Stretch" Width="{Binding ElementName=SearchStatusBar,Path=ActualWidth}">
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="30"/>
-            <RowDefinition MinHeight="30"/>
-            <RowDefinition MinHeight="30"/>
+            <RowDefinition MinHeight="30" Height="auto"/>
+            <RowDefinition MinHeight="30" Height="auto"/>
+            <RowDefinition MinHeight="30" Height="auto"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -24,21 +24,23 @@
             <ColumnDefinition MinWidth="200" Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <ToolBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
-            <TextBlock Text="Drive: " VerticalAlignment="Center"/>
-            <TextBox Text="C:" MinWidth="50"/>
-            <Separator/>
-            <Button Margin="2" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Background="#00000000" Command="{Binding StartSearch}" IsEnabled="{Binding SearchIsStopped}"/>
-            <Separator/>
-            <Button Margin="2" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Command="{Binding StopSearch}" IsEnabled="{Binding SearchIsRunning}"/>
-        </ToolBar>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="Choose Drive: " VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding DriveList}" SelectedItem="{Binding ActualDrive}" MinWidth="50" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="Processed files" VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <Button Margin="2" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="100" Command="{Binding StartSearch}" IsEnabled="{Binding SearchIsStopped}"/>
+            <Separator/>
+            <Button Margin="2" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="100" Command="{Binding StopSearch}" IsEnabled="{Binding SearchIsRunning}"/>
+        </StackPanel>
+
+        <Label Grid.Row="1" Grid.Column="1" Content="Processed files" VerticalAlignment="Center" />
         <TextBox Grid.Row="1" Name="ProcessedFilesTextBox" Grid.Column="2" Text="{Binding NoOfFiles}" MinWidth="50" IsReadOnly="True" Margin="0,0,5,0" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Text="Progress" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="3" Content="Progress" VerticalAlignment="Center"/>
         <ProgressBar Grid.Row="1" Grid.Column="4" Height="{Binding ElementName=ProcessedFilesTextBox, Path=ActualHeight}" MinWidth="200" Value="{Binding ProgressInPercent}" Maximum="100" Margin="5,0,15,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
 
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="Actual search folder" VerticalAlignment="Center" Height="20" Margin="0,0,10,0"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Actual search folder" VerticalAlignment="Center" Margin="0,0,10,0"/>
         <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding ActualDirectoryName}" VerticalAlignment="Center" Margin="0,0,15,0"/>
     </Grid>
 </UserControl>

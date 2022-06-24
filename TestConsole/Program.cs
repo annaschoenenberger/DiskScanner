@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DirectorySearchEngine;
+using System.IO;            
 
 namespace TestConsole
 {
@@ -17,14 +18,9 @@ namespace TestConsole
             Console.WriteLine(engine.GetDriveOverview());
             Console.WriteLine("Analysing the drive, please wait!");
             var cancellationTokenSource = new CancellationTokenSource();
-            var stat = engine.GetDriveStatistic(cancellationTokenSource.Token);
+            var driveInfo = DriveInfo.GetDrives().Where(p=>p.IsReady==true && p.DriveType==DriveType.Fixed).First();
+            engine.GetStatistics(driveInfo.RootDirectory,100, cancellationTokenSource.Token);
             Console.WriteLine();
-            Console.WriteLine($"Final results:");
-            Console.WriteLine($"Total no of bytes {stat.NoOfTotalBytes}");
-            Console.WriteLine($"Total no of files {stat.NoOfFiles}");
-            Console.WriteLine($"Total no of files with no access {stat.NoOfFilesWithNoAccess}");
-            Console.WriteLine($"Total no of directories {stat.NoOfDirectories}");
-            Console.WriteLine($"Total no of directories with no access {stat.NoOfDirectoriesWithNoAccess}");
 
             Console.ReadLine();
         }

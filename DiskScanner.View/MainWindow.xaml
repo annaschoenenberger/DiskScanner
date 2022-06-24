@@ -11,7 +11,9 @@
         <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
         <ToolBar DockPanel.Dock="Top" Height="30">
 
-            <Button Margin="2" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Click="Button_Click"  /> 
+            <Button Margin="2" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Click="OnExit"  />
+            <Separator/>
+            <Button Content="About" VerticalAlignment="Center" Click="OnAbout"/>
         </ToolBar>
         <local:UserControlDirectorySearch HorizontalAlignment="Stretch" Height="100" VerticalAlignment="Top"/>
     </DockPanel>

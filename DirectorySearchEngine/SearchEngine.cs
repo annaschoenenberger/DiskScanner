@@ -22,14 +22,14 @@ namespace DirectorySearchEngine
             return driveInformation;
         }
 
-        public DriveStatistic GetDriveStatistic(CancellationToken cancellationToken)
+        private DriveStatistic GetDriveStatistic(CancellationToken cancellationToken)
         {
             var drivestat=new DriveStatistic();
             foreach (var drive in DriveInfo.GetDrives())
             {
                 if (cancellationToken.IsCancellationRequested) break;
                 if (drive.DriveType != DriveType.Fixed) continue ;
-                GetStatistics(drive.RootDirectory, ref drivestat, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/1000, cancellationToken);
+                GetStatistics(drive.RootDirectory, (drive.TotalSize/1000000 - drive.AvailableFreeSpace/1000000)/1000, cancellationToken);
                 if (!cancellationToken.IsCancellationRequested) drivestat.ProgressInPercent = 100;
                 ProgressNotification?.Invoke(this,new SearchProgress(drivestat));
             } 
@@ -38,36 +38,37 @@ namespace DirectorySearchEngine
         }
         public event EventHandler<SearchProgress> ProgressNotification;
 
-        private void GetStatistics(DirectoryInfo rootDirectory, ref DriveStatistic stat, long reportEveryAdditionalMegaByte, CancellationToken cancellationToken)
+        public DriveStatistic Statistic { get; }=new DriveStatistic();
+        public void GetStatistics(DirectoryInfo rootDirectory, long reportEveryAdditionalMegaByte, CancellationToken cancellationToken)
         {
-            var actualProgress = stat.NoOfTotalBytes /1000000/ reportEveryAdditionalMegaByte;
-            stat.ActualDirectoryName = rootDirectory.FullName;
+            var actualProgress = Statistic.NoOfTotalBytes /1000000/ reportEveryAdditionalMegaByte;
+            Statistic.ActualDirectoryName = rootDirectory.FullName;
             try
             {
                 foreach (var file in rootDirectory.GetFiles())
                 {
                     if (cancellationToken.IsCancellationRequested) break;
-                    stat.NoOfFiles++;
-                    stat.NoOfTotalBytes+=file.Length;
-                    var newProgress=stat.NoOfTotalBytes/1000000/reportEveryAdditionalMegaByte;
+                    Statistic.NoOfFiles++;
+                    Statistic.NoOfTotalBytes+=file.Length;
+                    var newProgress=Statistic.NoOfTotalBytes/1000000/reportEveryAdditionalMegaByte;
                     //notification based on the size
                     if (newProgress > actualProgress)
                     {
-                        stat.ProgressInPercent += 0.1;
+                        Statistic.ProgressInPercent += 0.1;
                         actualProgress = newProgress;
-                        ProgressNotification?.Invoke(this,new SearchProgress(stat));
+                        ProgressNotification?.Invoke(this,new SearchProgress(Statistic));
                     }
                     //notification based on file count
-                    if (stat.NoOfFiles %100==0)
+                    if (Statistic.NoOfFiles %100==0)
                     {
-                        ProgressNotification?.Invoke(this, new SearchProgress(stat));
+                        ProgressNotification?.Invoke(this, new SearchProgress(Statistic));
                     }
 
                 }
             }
             catch 
             {
-                stat.NoOfFilesWithNoAccess++;
+                Statistic.NoOfFilesWithNoAccess++;
             }
 
             foreach (var subdir in rootDirectory.GetDirectories())
@@ -75,12 +76,12 @@ namespace DirectorySearchEngine
                 try
                 {
                     if (cancellationToken.IsCancellationRequested) break;
-                    GetStatistics(subdir, ref stat, reportEveryAdditionalMegaByte, cancellationToken);
-                    stat.NoOfDirectories++;
+                    GetStatistics(subdir, reportEveryAdditionalMegaByte, cancellationToken);
+                    Statistic.NoOfDirectories++;
                 }
                 catch
                 {
-                    stat.NoOfDirectoriesWithNoAccess++;
+                    Statistic.NoOfDirectoriesWithNoAccess++;
 
                 }
             }

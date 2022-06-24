@@ -3,6 +3,8 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,6 +23,15 @@ namespace DiskScanner.ViewModel
             StopSearch = new RelayCommand(OnStop);
             Engine = new SearchEngine();
             Engine.ProgressNotification += Engine_ProgressNotification;
+            foreach (var drive in DriveInfo.GetDrives())
+            {
+                if (drive.IsReady) 
+                { 
+                    DriveList.Add(drive);       
+                }
+            }
+            ActualDrive = DriveList.First();
+
         }
 
         private void Engine_ProgressNotification(object sender, SearchProgress e)
@@ -47,6 +58,11 @@ namespace DiskScanner.ViewModel
         }
 
         public CancellationTokenSource TokenSource { get; set; }
+        public DriveInfo ActualDrive 
+        {
+            get => driveInformation;
+            set => SetProperty(ref driveInformation, value);
+        }
         private void OnStart()
         {
             SearchIsRunning = true;
@@ -54,10 +70,12 @@ namespace DiskScanner.ViewModel
             TokenSource = new CancellationTokenSource();
             Task.Run(() =>
                 {
-                    Engine.GetDriveStatistic(TokenSource.Token);
+                    var totalUsedMegaBytes = (ActualDrive.TotalSize - ActualDrive.AvailableFreeSpace) / 1000000;
+                    Engine.GetStatistics(ActualDrive.RootDirectory,totalUsedMegaBytes/1000, TokenSource.Token);
+                    ProgressInPercent = 100;
                 });
         }
-
+        public ObservableCollection<DriveInfo> DriveList { get; }= new ObservableCollection<DriveInfo>();
         public ICommand StartSearch { get; set; }
         public ICommand StopSearch { get; set; }
         public double ProgressInPercent
@@ -69,6 +87,7 @@ namespace DiskScanner.ViewModel
         private string actualDirectoryName;
         private bool searchIsRunning;
         private bool searchIsStopped = true;
+        private DriveInfo driveInformation;
 
         public int NoOfFiles
         {
@@ -85,10 +104,10 @@ namespace DiskScanner.ViewModel
             get => searchIsRunning;
             set => SetProperty(ref searchIsRunning, value);
         }
-        public bool SearchIsStopped 
-        { 
+        public bool SearchIsStopped
+        {
             get => searchIsStopped;
-            set => SetProperty(ref searchIsStopped, value); 
+            set => SetProperty(ref searchIsStopped, value);
         }
     }
 }

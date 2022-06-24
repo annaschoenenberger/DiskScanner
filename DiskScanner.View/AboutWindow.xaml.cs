@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DiskScanner.View
 {
     /// <summary>
-    /// Interaction logic for UserControlDirectorySearch.xaml
+    /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    public partial class UserControlDirectorySearch : UserControl
+    public partial class AboutWindow : Window
     {
-        public UserControlDirectorySearch()
+        public AboutWindow()
         {
             InitializeComponent();
+            About.Text=Properties.Resources.About;
         }
-
     }
 }

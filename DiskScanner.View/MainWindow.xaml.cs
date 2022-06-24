@@ -27,9 +27,23 @@ namespace DiskScanner.View
             DataContext = MainViewModel;
         }
         public ScannerViewModel MainViewModel { get; set; }=new ScannerViewModel();
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnExit(object sender, RoutedEventArgs e)
         {
-            Close();
+            string messageBoxText = "Do you really want to close the application?";
+            string caption = "Exit?";
+            MessageBoxButton button = MessageBoxButton.YesNoCancel;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Cancel);
+
+            if (result==MessageBoxResult.Yes) Close();
+        }
+
+        private void OnAbout(object sender, RoutedEventArgs e)
+        {
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.Show();
         }
     }
 }
