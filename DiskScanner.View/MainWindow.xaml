@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:DiskScanner.ViewModel;assembly=DiskScanner.ViewModel"
         d:DataContext="{d:DesignInstance Type=vm:ScannerViewModel}"
         mc:Ignorable="d"
-        Title="Anna's Disk Scanner" Height="450" Width="1326">
+        Title="Banannas Drive Scanner" Height="450" Width="1326">
         <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
         <ToolBar DockPanel.Dock="Top" Height="30">
 
