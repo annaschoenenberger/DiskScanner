@@ -10,3 +10,5 @@ g) introduction of observable collection for all available drives.
 h) drive selection with combo box based on the observable collection. 
 i) Exit message box.
 j) About Window with an embedded resource file. 
+
+26.06.2022

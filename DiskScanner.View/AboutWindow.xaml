@@ -19,7 +19,7 @@
             <ColumnDefinition Width="256*"/>
             <ColumnDefinition Width="303*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Name="About" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+        <TextBox Name="About" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap"/>
 
     </Grid>
 </Window>
