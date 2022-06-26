@@ -19,8 +19,10 @@ namespace TestConsole
             Console.WriteLine("Analysing the drive, please wait!");
             var cancellationTokenSource = new CancellationTokenSource();
             var driveInfo = DriveInfo.GetDrives().Where(p=>p.IsReady==true && p.DriveType==DriveType.Fixed).First();
-            engine.GetStatistics(driveInfo.RootDirectory,100, cancellationTokenSource.Token);
-            Console.WriteLine();
+            var totalUsedMegaBytes = (driveInfo.TotalSize - driveInfo.AvailableFreeSpace) / 1000000;
+            engine.GetStatistics(driveInfo.RootDirectory, totalUsedMegaBytes / 1000, cancellationTokenSource.Token);
+            Console.WriteLine("");
+            Console.WriteLine("Drive analysis finished");
 
             Console.ReadLine();
         }
