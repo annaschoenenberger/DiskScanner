@@ -15,6 +15,16 @@ namespace DirectorySearchEngine
         public long NoOfTotalBytes { get; set; }
         public double ProgressInPercent { get; set; }
         public string ActualDirectoryName { get; set; }
+        public void Reset()
+        {
+            NoOfFiles = 0;
+            NoOfDirectoriesWithNoAccess = 0;
+            NoOfDirectories= 0;
+            NoOfFilesWithNoAccess= 0;
+            NoOfTotalBytes= 0;
+            ProgressInPercent = 0;
+            ActualDirectoryName =String.Empty;
+        }
 
     }
 }

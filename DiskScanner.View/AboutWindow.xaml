@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiskScanner.View"
         mc:Ignorable="d"
-        Title="About Banannas Drive Scanner" Height="450" Width="800">
+        Title="About Banannas Drive Scanner" 
+        Height="450" Width="800">
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="20" Height="auto"/>
-            <RowDefinition MinHeight="20" Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
             <RowDefinition MinHeight="20" Height="auto"/>
 
         </Grid.RowDefinitions>
@@ -19,12 +19,10 @@
             <ColumnDefinition Width="256*"/>
             <ColumnDefinition Width="303*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Name="About" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Link for github access: "/>
-        <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center">
-            <Hyperlink NavigateUri="https://github.com/annaschoenenberger/DiskScanner" />
-            https://github.com/annaschoenenberger/DiskScanner
+        <TextBox Name="About" Grid.Column="0" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Link for github access: "/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="https://github.com/annaschoenenberger/DiskScanner" IsReadOnly="True">
 
-        </TextBlock>
+        </TextBox>
     </Grid>
 </Window>

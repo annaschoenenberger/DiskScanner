@@ -41,10 +41,15 @@ namespace DiskScanner.ViewModel
             ActualDirectoryName = e.DriveStatisticProgress.ActualDirectoryName;
             if (ProgressInPercent >= 100)
             {
-                SearchIsRunning = false;
-                SearchIsStopped = true;
+                SetComplete();
             }
 
+        }
+
+        private void SetComplete()
+        {
+            SearchIsRunning = false;
+            SearchIsStopped = true;
         }
 
         public SearchEngine Engine { get; set; }
@@ -68,11 +73,14 @@ namespace DiskScanner.ViewModel
             SearchIsRunning = true;
             SearchIsStopped = false;
             TokenSource = new CancellationTokenSource();
+
             Task.Run(() =>
                 {
                     var totalUsedMegaBytes = (ActualDrive.TotalSize - ActualDrive.AvailableFreeSpace) / 1000000;
+                    Engine.Statistic.Reset();
                     Engine.GetStatistics(ActualDrive.RootDirectory,totalUsedMegaBytes/1000, TokenSource.Token);
                     ProgressInPercent = 100;
+                    SetComplete ();
                 });
         }
         public ObservableCollection<DriveInfo> DriveList { get; }= new ObservableCollection<DriveInfo>();
