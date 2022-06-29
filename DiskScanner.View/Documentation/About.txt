@@ -17,12 +17,3 @@ g) introduction of observable collection for all available drives.
 h) drive selection with combo box based on the observable collection. 
 i) Exit message box.
 j) About Window with an embedded resource file. 
-
-**Prerequisites**
-Microsoft Visual Studio 2022 must be installed (development environment).
-.NET Framework 4.7.2 must be installed for execution.
-
-**Instructions**
-Download the source code from github : https://github.com/annaschoenenberger/DiskScanner
-Open the solution file DiskScanner.sln.
-Run the project DiskScanner.View.
